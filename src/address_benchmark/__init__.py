@@ -1,2 +1,0 @@
-"""Address matching benchmark."""
-

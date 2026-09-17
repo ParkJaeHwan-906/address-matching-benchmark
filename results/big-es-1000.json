@@ -1,6 +1,6 @@
 {
   "dataset" : {
-    "size" : 10000,
+    "size" : 1000000,
     "query_count" : 1000,
     "seed" : 20260917,
     "synthetic" : true
@@ -12,13 +12,13 @@
   "results" : {
     "elasticsearch_ngram" : {
       "queries" : 1000,
-      "top1_accuracy" : 0.989,
-      "top5_accuracy" : 0.996,
-      "mrr" : 0.9919166666666668,
-      "latency_ms_p50" : 1.9699,
-      "latency_ms_p95" : 3.0369,
-      "latency_ms_p99" : 3.8664,
-      "throughput_qps" : 458.38860544938785
+      "top1_accuracy" : 0.945,
+      "top5_accuracy" : 0.979,
+      "mrr" : 0.9598166666666668,
+      "latency_ms_p50" : 12.6642,
+      "latency_ms_p95" : 19.8443,
+      "latency_ms_p99" : 23.7455,
+      "throughput_qps" : 74.55807416375141
     }
   }
 }

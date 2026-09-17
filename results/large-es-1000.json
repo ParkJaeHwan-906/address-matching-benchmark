@@ -1,24 +1,24 @@
 {
-  "dataset": {
-    "size": 10000000,
-    "query_count": 1000,
-    "seed": 20260917,
-    "synthetic": true
+  "dataset" : {
+    "size" : 10000000,
+    "query_count" : 1000,
+    "seed" : 20260917,
+    "synthetic" : true
   },
-  "environment": {
-    "python": "3.14.6",
-    "platform": "Windows-11-10.0.26200-SP0"
+  "environment" : {
+    "java" : "21.0.11 (OpenJDK 64-Bit Server VM)",
+    "platform" : "Windows 11 10.0 amd64"
   },
-  "results": {
-    "elasticsearch_ngram": {
-      "queries": 1000,
-      "top1_accuracy": 0.903,
-      "top5_accuracy": 0.971,
-      "mrr": 0.9316833333333333,
-      "latency_ms_p50": 48.621,
-      "latency_ms_p95": 88.3096,
-      "latency_ms_p99": 109.3409,
-      "throughput_qps": 19.431896899956367
+  "results" : {
+    "elasticsearch_ngram" : {
+      "queries" : 1000,
+      "top1_accuracy" : 0.907,
+      "top5_accuracy" : 0.977,
+      "mrr" : 0.9372666666666671,
+      "latency_ms_p50" : 37.7933,
+      "latency_ms_p95" : 77.6327,
+      "latency_ms_p99" : 98.8877,
+      "throughput_qps" : 23.658952266232603
     }
   }
 }
