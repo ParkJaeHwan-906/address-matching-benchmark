@@ -60,4 +60,4 @@ address-bench compare --dataset data/generated/large --output results/large.json
 
 ## 라이선스
 
-개인 포트폴리오용 private repository로 시작합니다. 외부 공개 전 회사 기밀 포함 여부를 다시 검토하세요.
+개인 포트폴리오용으로 공개한 저장소입니다. 모든 주소는 seed로 생성한 합성 데이터이며, 실제 고객 주소·OCR 원문·회사 코드는 포함하지 않습니다.
