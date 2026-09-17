@@ -29,6 +29,7 @@ def main() -> None:
     compare.add_argument("--dataset", type=Path, required=True)
     compare.add_argument("--output", type=Path, required=True)
     compare.add_argument("--query-limit", type=int)
+    compare.add_argument("--warmup", type=int, default=10)
     compare.add_argument("--skip-lcs", action="store_true")
     args = parser.parse_args()
     es = ElasticsearchMatcher(os.getenv("ELASTICSEARCH_URL", "http://localhost:9200"), os.getenv("ELASTICSEARCH_INDEX", "address-mapping"))
@@ -40,12 +41,15 @@ def main() -> None:
         es.bulk_index(args.dataset)
     else:
         queries = load_queries(args.dataset / "queries.ndjson", args.query_limit)
-        results = {"elasticsearch_ngram": run(es, queries)}
+        results = {"elasticsearch_ngram": run(es, queries, args.warmup)}
         if not args.skip_lcs:
-            results["exhaustive_lcs"] = run(ExhaustiveLcsMatcher(load_records(args.dataset / "addresses.ndjson")), queries)
+            results["exhaustive_lcs"] = run(
+                ExhaustiveLcsMatcher(load_records(args.dataset / "addresses.ndjson")),
+                queries,
+                args.warmup,
+            )
         write_report(args.output, args.dataset, results)
 
 
 if __name__ == "__main__":
     main()
-

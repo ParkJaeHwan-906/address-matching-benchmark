@@ -9,7 +9,12 @@ BUILDINGS = ["행복아파트", "푸른마을", "센트럴빌", "한빛타워", 
 
 
 def canonical_address(index: int) -> str:
-    return f"{SIDOS[index % len(SIDOS)]} {DISTRICTS[(index // 16) % len(DISTRICTS)]} {ROADS[(index // 192) % len(ROADS)]} {index % 999 + 1} {BUILDINGS[(index // 1920) % len(BUILDINGS)]} {index % 120 + 1}동"
+    # The lot/building pair is unique for every row. Without this invariant,
+    # a large synthetic corpus can assign the same address to different IDs,
+    # making Top-k accuracy mathematically ambiguous rather than measuring search.
+    lot = index // 120 + 1
+    building = index % 120 + 1
+    return f"{SIDOS[index % len(SIDOS)]} {DISTRICTS[(index // 16) % len(DISTRICTS)]} {ROADS[(index // 192) % len(ROADS)]} {lot}-{building} {BUILDINGS[(index // 1920) % len(BUILDINGS)]} {building}동"
 
 
 def noisy_alias(address: str, rng: random.Random) -> str:
@@ -39,4 +44,3 @@ def generate(size: int, query_count: int, output: Path, seed: int) -> None:
                 queries.write(json.dumps({"query": noisy_alias(alias, rng), "expected_id": index}, ensure_ascii=False) + "\n")
     metadata = {"size": size, "query_count": len(query_ids), "seed": seed, "synthetic": True}
     (output / "metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
-

@@ -43,6 +43,8 @@ address-bench compare --dataset data/generated/large --output results/large.json
 
 자세한 평가 기준은 [실험 설계](docs/EXPERIMENT.md)를 참고하세요.
 
+실측 수치와 해석은 [벤치마크 결과](docs/BENCHMARK_RESULTS.md), 원본 JSON은 [`results/`](results/)에서 확인할 수 있습니다.
+
 ## 배경
 
 실무에서 아파트·빌라명, 약칭, OCR 오탈자로 주소 API 검색이 실패하는 문제를 LCS 문자열 매칭과 전용 주소 매핑 DB로 보정했습니다. 이 저장소는 그 경험을 개인정보 없이 재구성하고, 데이터가 1만 건에서 1천만 건으로 커질 때 선형 전수 탐색을 역색인 기반 검색으로 전환해야 하는 근거를 실측하기 위한 프로젝트입니다.

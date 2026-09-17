@@ -1,0 +1,34 @@
+{
+  "dataset": {
+    "size": 10000000,
+    "query_count": 1000,
+    "seed": 20260917,
+    "synthetic": true
+  },
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "results": {
+    "elasticsearch_ngram": {
+      "queries": 1,
+      "top1_accuracy": 1.0,
+      "top5_accuracy": 1.0,
+      "mrr": 1.0,
+      "latency_ms_p50": 71.994,
+      "latency_ms_p95": 71.994,
+      "latency_ms_p99": 71.994,
+      "throughput_qps": 13.875283671754563
+    },
+    "exhaustive_lcs": {
+      "queries": 1,
+      "top1_accuracy": 1.0,
+      "top5_accuracy": 1.0,
+      "mrr": 1.0,
+      "latency_ms_p50": 965045.6775,
+      "latency_ms_p95": 965045.6775,
+      "latency_ms_p99": 965045.6775,
+      "throughput_qps": 0.0010362183739060188
+    }
+  }
+}
