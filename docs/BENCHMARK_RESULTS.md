@@ -5,6 +5,17 @@
 
 ## 요약
 
+### 100건 — 전체 100개 질의 직접 비교
+
+| 방식 | Top-1 | Top-5 | MRR | p50 | p95 | 처리량 |
+|---|---:|---:|---:|---:|---:|---:|
+| Elasticsearch 2~4-gram | 99.0% | 99.0% | 0.9900 | 6.38ms | 22.17ms | 104.43 QPS |
+| LCS 전수 탐색 | 98.0% | 100.0% | 0.9900 | 4.85ms | 5.53ms | 203.33 QPS |
+
+- 후보가 100건뿐일 때는 LCS가 p50 기준 약 **1.32배**, 처리량 기준 약 **1.95배** 우세했다.
+- 이 규모에서는 Elasticsearch HTTP 호출과 검색 엔진 고정 비용이 전수 탐색 비용보다 크다.
+- 두 방식의 MRR은 같았고 Top-1은 Elasticsearch, Top-5는 LCS가 각각 1%p 높았다.
+
 ### 10,000건 — 동일한 100개 질의 직접 비교
 
 | 방식 | Top-1 | Top-5 | MRR | p50 | p95 | 처리량 |
@@ -33,7 +44,7 @@
 
 ## 결론
 
-1만 건 이하에서는 LCS도 기능적으로 사용할 수 있지만, 한 요청에 약 0.54초가 걸려 동시 요청을 처리하기 어렵다. 1천만 건에서는 전수 탐색 한 번이 약 16분이므로 온라인 검색 방식으로 사용할 수 없다. n-gram 역색인은 대규모에서도 p95 100ms 이내를 유지하면서 Top-5 97.1%를 달성했다.
+100건에서는 LCS가 더 빠르고 구조도 단순하므로 Elasticsearch 도입 이점이 작다. 그러나 1만 건에서는 LCS 한 요청이 약 0.54초로 늘어 동시 요청을 처리하기 어렵고, 1천만 건에서는 전수 탐색 한 번이 약 16분이므로 온라인 검색 방식으로 사용할 수 없다. n-gram 역색인은 대규모에서도 p95 100ms 이내를 유지하면서 Top-5 97.1%를 달성했다.
 
 Top-1 정확도는 데이터 규모가 커질수록 유사 후보가 늘어 99.2%에서 90.3%로 하락했다. 운영 적용 시에는 n-gram 후보 검색 후 상위 후보에 LCS 또는 도메인 규칙을 적용하는 **2단계 재순위**가 다음 개선 대상이다.
 
@@ -43,4 +54,5 @@ Top-1 정확도는 데이터 규모가 커질수록 유사 후보가 늘어 99.2
 - 주소 ID별 고유 지번을 보장해 서로 다른 정답이 동일 문자열을 갖는 충돌을 제거했다.
 - 1천만 건 LCS 정확도는 계산 비용 때문에 한 건만 측정했으며, Elasticsearch와 동등한 정확도 표본으로 주장하지 않는다.
 - 결과는 Python 기준선 구현과 단일 노드 Elasticsearch의 비교다. 언어 최적화, 샤드 수, heap, 캐시 상태에 따라 절대값은 달라질 수 있다.
-- 원시 결과: [`small-es-1000.json`](../results/small-es-1000.json), [`small-comparison-100.json`](../results/small-comparison-100.json), [`large-es-1000.json`](../results/large-es-1000.json), [`large-comparison-1.json`](../results/large-comparison-1.json)
+- 현재 수치는 각 조건의 초기 실측 1회 결과다. 분산과 신뢰구간이 필요한 발표용 결과는 동일 조건에서 최소 3회 반복해야 한다.
+- 원시 결과: [`tiny-comparison-100.json`](../results/tiny-comparison-100.json), [`small-es-1000.json`](../results/small-es-1000.json), [`small-comparison-100.json`](../results/small-comparison-100.json), [`large-es-1000.json`](../results/large-es-1000.json), [`large-comparison-1.json`](../results/large-comparison-1.json)

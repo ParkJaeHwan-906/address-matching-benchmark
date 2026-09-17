@@ -6,6 +6,7 @@ OCR이 추출한 비표준 주소 문자열을 표준 주소에 연결하는 후
 
 | 시나리오 | 매핑 테이블 | LCS | Elasticsearch |
 |---|---:|---|---|
+| Tiny | 100건 | 모든 후보와 LCS 계산 | 2~4-gram 역색인 검색 |
 | Small | 10,000건 | 모든 후보와 LCS 계산 | 2~4-gram 역색인 검색 |
 | Large | 10,000,000건 | 동일한 전수 탐색 기준선 | 동일한 역색인 검색 |
 
@@ -21,6 +22,14 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 python -m pytest
 docker compose up -d --wait elasticsearch
+```
+
+### 100건
+
+```bash
+address-bench generate --size 100 --queries 100 --output data/generated/tiny
+address-bench index --dataset data/generated/tiny/addresses.ndjson --recreate
+address-bench compare --dataset data/generated/tiny --output results/tiny-comparison-100.json
 ```
 
 ### 1만 건
